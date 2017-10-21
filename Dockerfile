@@ -34,20 +34,17 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN pip install awscli
 
 # Install node
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash && \
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash && \
     export NVM_DIR="/root/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
     nvm install 6 --lts && \
     npm update npm -g
 
 # Install yarn
-RUN apt update && apt -y install yarn
+RUN apt update && apt -y install yarn --no-install-recommends
 
 # Clean apt
 RUN apt clean
-
-# Install node-gyp
-RUN yarn global add node-gyp
 
 # Misc
 RUN mkdir -p ~/.ssh
