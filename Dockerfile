@@ -30,6 +30,13 @@ RUN apt -y install wget \
 RUN curl -o- https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
+# Install google cloud sdk
+RUN curl -fsSL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-155.0.0-linux-x86_64.tar.gz -o /google-cloud-sdk.tar.gz
+RUN tar -xf /google-cloud-sdk.tar.gz -C /
+RUN /google-cloud-sdk/install.sh --usage-reporting false --path-update true
+RUN rm /google-cloud-sdk.tar.gz
+RUN ln -s /google-cloud-sdk/bin/gcloud /usr/bin/
+
 # Install awscli
 RUN pip install awscli
 
